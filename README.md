@@ -41,6 +41,10 @@ Proposed invocation syntax examples:
       host11:host12 \
       host12:host13
 
+    # To 3 other servers, in a serial chain, same as above but more compact::
+    dcarsync /usr/local/me/dataset/ /usr/local/remote/dataset/ .:host11:host12:host13
+
+
     # To a cluster of 6 servers in a DC, with host11 explicitly named as intermediary:
     dcarsync /usr/local/me/dataset/ /usr/local/remote/dataset/ \
       .:host11 \
