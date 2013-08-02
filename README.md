@@ -86,7 +86,7 @@ To 3 distinct DCs, but . has limited upstream so use host11 as an intermediary:
     dcarsync /usr/local/me/dataset/ /usr/local/remote/dataset/ \
       .[-avz]:host11 \
       'host11[-av]:[-av](host12,host13,host14,host15,host16)' \
-      'host11[-av]:[-av](host21,host22,host23)' \
+      'host11[-avz]:[-av](host21,host22,host23)' \
       'host11[-avz]:[-av](host31,host32,host33,host34,host35,host36)'
 
 To 3 distinct DCs, but . has limited upstream so use 1 unnamed intermediary:
