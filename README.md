@@ -5,12 +5,17 @@ Datacenter-aware rsync wrapper
 
 This project aims to provide a wrapper around rsync+ssh to provide flexible fan-out for content distribution.  This is often needed in multi-datacenter installations where there are incentives to minimize upstream bandwidth usage, parallelize rsync cost, etc...
 
-Terminology and assumptions:
-----------------------------
-* There's 1 server that contains a dataset to be distributed to several servers
+Assumptions and requirements:
+-----------------------------
+* There's 1 "source server" that contains a dataset to be distributed to several servers
 * The source server can successfully push the dataset using rsync, over ssh, passwordless, to *all* recipient servers
 * ssh agent forwarding is not disabled
-* The source server is referenced during invocation as .
+
+Intended behavior:
+------------------
+ * dcarsync will parse its input and internally build a directed acyclic graph.  Each graph node will be a single server or a "cluster" of servers
+ * dcarsync will go about satisfying the DAG from the top, using either rsync(->ssh), or ssh->(rsync->ssh)
+ * A graph node which turns green will satisfy its children in (a possibly configurable) level of parallelism
 
 Request for Comments:
 ---------------------
@@ -19,6 +24,8 @@ https://github.com/minaguib/dcarsync/issues/1
 
 Proposed invocation syntax examples:
 ------------------------------------
+
+The source server containing the content to be distributed is referenced as "."
 
 To 1 other server:
 
