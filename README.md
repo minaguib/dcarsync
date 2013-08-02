@@ -20,32 +20,39 @@ https://github.com/minaguib/dcarsync/issues/1
 Proposed invocation syntax examples:
 ------------------------------------
 
-    # To 1 other server
+To 1 other server:
+
     dcarsync /usr/local/me/dataset/ /usr/local/remote/dataset/ .:host11
 
-    # To 1 other server with ssh credentials:
+To 1 other server with ssh credentials:
+
     dcarsync /usr/local/me/dataset/ /usr/local/remote/dataset/ .:deploy@host11
 
-    # To 1 other server, with rsync options given
+To 1 other server, with rsync options given
+
     dcarsync /usr/local/me/dataset/ /usr/local/remote/dataset/ .[-avz]:host11
 
-    # To 2 other servers, in parallel:
+To 2 other servers, in parallel:
+
     dcarsync /usr/local/me/dataset/ /usr/local/remote/dataset/ .:host11 .:host12
 
-    # To 2 other servers, in a serial chain (shows dependency resolution):
+To 2 other servers, in a serial chain (shows dependency resolution):
+
     dcarsync /usr/local/me/dataset/ /usr/local/remote/dataset/ .:host11 host11:host12
 
-    # To 3 other servers, in a serial chain:
+To 3 other servers, in a serial chain:
+
     dcarsync /usr/local/me/dataset/ /usr/local/remote/dataset/ \
       .:host11 \
       host11:host12 \
       host12:host13
 
-    # To 3 other servers, in a serial chain, same as above but more compact::
+To 3 other servers, in a serial chain, same as above but more compact::
+
     dcarsync /usr/local/me/dataset/ /usr/local/remote/dataset/ .:host11:host12:host13
 
+To a cluster of 6 servers in a DC, with host11 explicitly named as intermediary:
 
-    # To a cluster of 6 servers in a DC, with host11 explicitly named as intermediary:
     dcarsync /usr/local/me/dataset/ /usr/local/remote/dataset/ \
       .:host11 \
       host11:host12 \
@@ -54,30 +61,37 @@ Proposed invocation syntax examples:
       host11:host15 \
       host11:host16
 
-    # To a cluster of 6 servers in a DC, using logical group with an unnamed intermediary:
-    # This is similar to the above, but using an unnamed intermediary offers retry thereby eliminating host11 as a SPOF:
+To a cluster of 6 servers in a DC, using logical group with an unnamed intermediary:
+This is similar to the above, but using an unnamed intermediary offers retry thereby eliminating host11 as a SPOF:
+
     dcarsync /usr/local/me/dataset/ /usr/local/remote/dataset/ '.:(host11,host12,host13,host14,host15,host16)'
 
-    # To a cluster of 6 servers in a DC, with initial rsync options given:
+To a cluster of 6 servers in a DC, with initial rsync options given:
+
     dcarsync /usr/local/me/dataset/ /usr/local/remote/dataset/ '.[-avz]:(host11,host12,host13,host14,host15,host16)'
 
-    # To a cluster of 6 servers in a DC, with initial rsync options given, and secondary (intra-DC) rsync options given:
+To a cluster of 6 servers in a DC, with initial rsync options given, and secondary (intra-DC) rsync options given:
+
     dcarsync /usr/local/me/dataset/ /usr/local/remote/dataset/ '.[-avz]:[-av](host11,host12,host13,host14,host15,host16)'
 
-    # To 3 distinct DCs:
+To 3 distinct DCs:
+
     dcarsync /usr/local/me/dataset/ /usr/local/remote/dataset/ \
       '.[-avz]:[-av](host11,host12,host13,host14,host15,host16)' \
       '.[-avz]:[-av](host21,host22,host23)' \
       '.[-avz]:[-av](host31,host32,host33,host34,host35,host36)'
 
-    # To 3 distinct DCs, but . has limited upstream so use host11 as an intermediary:
+To 3 distinct DCs, but . has limited upstream so use host11 as an intermediary:
+
     dcarsync /usr/local/me/dataset/ /usr/local/remote/dataset/ \
       .[-avz]:host11 \
       'host11[-av]:[-av](host12,host13,host14,host15,host16)' \
       'host11[-av]:[-av](host21,host22,host23)' \
       'host11[-avz]:[-av](host31,host32,host33,host34,host35,host36)'
 
-    # To 3 distinct DCs, but . has limited upstream so use 1 unnamed intermediary:
+To 3 distinct DCs, but . has limited upstream so use 1 unnamed intermediary:
+
     dcarsync /usr/local/me/dataset/ /usr/local/remote/dataset/ \
     '.:(host11,host12,host13,host14,host15,host16):(host21,host22,host23):(host31,host32,host33,host34,host35,host36)'
+
 
